@@ -1,0 +1,2 @@
+prepare: {test_size: 0.2, seed: 42}
+train: {C: 1.0, max_iter: 1000}

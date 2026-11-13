@@ -1,0 +1,30 @@
+stages:
+  prepare:
+    cmd: python src/prepare.py data/breast_cancer.csv data/prepared
+    deps:
+    - data/breast_cancer.csv
+    - src/prepare.py
+    params:
+    - prepare.seed
+    - prepare.test_size
+    outs:
+    - data/prepared
+  train:
+    cmd: python src/train.py data/prepared models/model.pkl
+    deps:
+    - data/prepared
+    - src/train.py
+    params:
+    - train.C
+    - train.max_iter
+    outs:
+    - models/model.pkl
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - data/prepared
+    - models/model.pkl
+    - src/evaluate.py
+    metrics:
+    - metrics.json:
+        cache: false
